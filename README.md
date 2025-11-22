@@ -14,8 +14,7 @@ Experiencia educativa en VR diseñada para Google Cardboard que enseña segurida
 
 
 
-## 📋 Descripción**Autor:** Diego Armando Sanchez RubioJuego de realidad virtual educativo desarrollado en **Godot 4.5** para dispositivos Android con **Google Cardboard**. El jugador debe recorrer un escenario 3D con conciencia peatonal, aprendiendo a cruzar calles de forma segura.
-
+## 📋 Descripción
 
 
 Juego educativo de realidad virtual que simula múltiples cruces de calle con tráfico vehicular. El jugador debe aprender a cruzar de forma segura, observando el tráfico y esperando el momento adecuado. El sistema proporciona retroalimentación educativa en tiempo real sobre la seguridad peatonal.
@@ -1343,5 +1342,6 @@ Este proyecto es de código abierto y puede ser usado con fines educativos.
 **Fecha:** 2025  
 **Motor:** Godot 4.5  
 **Propósito:** Educación vial en realidad virtual
+
 
 
