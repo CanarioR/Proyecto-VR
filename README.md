@@ -1,4 +1,4 @@
-# Aprendiendo a Cruzar la Calle# 🎮
+# Aprendiendo a Cruzar la Calle 🎮
 
 
 
@@ -1343,4 +1343,5 @@ Este proyecto es de código abierto y puede ser usado con fines educativos.
 **Fecha:** 2025  
 **Motor:** Godot 4.5  
 **Propósito:** Educación vial en realidad virtual
+
 
