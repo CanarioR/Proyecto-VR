@@ -1,0 +1,421 @@
+[gd_scene load_steps=31 format=3 uid="uid://bkw3yq7xj8g5n"]
+
+[ext_resource type="Script" uid="uid://dm6rafaucul5p" path="res://scripts/continuous_movement.gd" id="1_movement"]
+[ext_resource type="PackedScene" uid="uid://clcyb2gjeuuiv" path="res://models/EscenarioPrincipal.glb" id="2_scenario"]
+[ext_resource type="Script" uid="uid://dhuke0ij22np0" path="res://scripts/add_collisions.gd" id="3_collisions"]
+[ext_resource type="Script" uid="uid://bhpd7dbmt7665" path="res://scripts/finish_zone.gd" id="4_finish"]
+[ext_resource type="Script" uid="uid://dht2fuew61ac5" path="res://scripts/end_game_menu.gd" id="5_endmenu"]
+[ext_resource type="Script" uid="uid://cba5snjrwxixc" path="res://scripts/crossing_manager.gd" id="6_crossing_manager"]
+[ext_resource type="Script" uid="uid://bo8u3t137mixn" path="res://scripts/safety_messages.gd" id="7_safety_messages"]
+[ext_resource type="Script" uid="uid://do1eh2ll4fwa5" path="res://scripts/crossing_zone.gd" id="8_crossing_zone"]
+[ext_resource type="Script" uid="uid://b2g38ksp001m2" path="res://scripts/vehicle.gd" id="9_vehicle"]
+[ext_resource type="Script" uid="uid://bvdai2qx6ylk2" path="res://scripts/initial_instructions.gd" id="10_instructions"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_Player"]
+radius = 0.3
+height = 1.7
+
+[sub_resource type="QuadMesh" id="QuadMesh_Reticle"]
+size = Vector2(0.01, 0.01)
+
+[sub_resource type="StandardMaterial3D" id="Material_Reticle"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.6)
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.529412, 0.807843, 0.921569, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Boundary"]
+size = Vector3(1, 10, 205.98035)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_FinishZone"]
+size = Vector3(5, 5, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ButtonRestart"]
+size = Vector3(2, 0.5, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ButtonRestart"]
+size = Vector3(2, 0.5, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="Material_ButtonRestart"]
+albedo_color = Color(0.2, 0.8, 0.3, 1)
+emission_enabled = true
+emission = Color(0.1, 0.4, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="Material_ButtonMenu"]
+albedo_color = Color(0.8, 0.2, 0.2, 1)
+emission_enabled = true
+emission = Color(0.4, 0.1, 0.1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_CrossingZone"]
+size = Vector3(16.83496, 3, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Vehicle"]
+size = Vector3(4, 1.5, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_Vehicle"]
+size = Vector3(4, 1.5, 2)
+
+[sub_resource type="StandardMaterial3D" id="Material_Vehicle"]
+albedo_color = Color(0.8, 0.1, 0.1, 1)
+metallic = 0.5
+roughness = 0.3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_VehicleArea"]
+size = Vector3(4.5, 2, 2.5)
+
+[sub_resource type="StandardMaterial3D" id="Material_Vehicle2"]
+albedo_color = Color(0.1, 0.1, 0.8, 1)
+metallic = 0.5
+roughness = 0.3
+
+[sub_resource type="StandardMaterial3D" id="Material_Vehicle3"]
+albedo_color = Color(0.1, 0.8, 0.1, 1)
+metallic = 0.5
+roughness = 0.3
+
+[sub_resource type="StandardMaterial3D" id="Material_Vehicle4"]
+albedo_color = Color(0.8, 0.8, 0.1, 1)
+metallic = 0.5
+roughness = 0.3
+
+[sub_resource type="StandardMaterial3D" id="Material_Vehicle5"]
+albedo_color = Color(0.8, 0.4, 0.1, 1)
+metallic = 0.5
+roughness = 0.3
+
+[sub_resource type="StandardMaterial3D" id="Material_Vehicle6"]
+albedo_color = Color(0.6, 0.1, 0.8, 1)
+metallic = 0.5
+roughness = 0.3
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_movement")
+
+[node name="Player" type="CharacterBody3D" parent="." groups=["player"]]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, 0)
+shape = SubResource("CapsuleShape3D_Player")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="Player"]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="Player/XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="Reticle" type="MeshInstance3D" parent="Player/XROrigin3D/XRCamera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_Reticle")
+surface_material_override/0 = SubResource("Material_Reticle")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 5, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="InitialInstructions" type="Node3D" parent="."]
+script = ExtResource("10_instructions")
+
+[node name="InstructionLabel" type="Label3D" parent="InitialInstructions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.8, -2.5)
+pixel_size = 0.004
+billboard = 1
+text = " Mantén pulsado para avanzar"
+font_size = 48
+outline_size = 8
+
+[node name="ObjectiveLabel" type="Label3D" parent="InitialInstructions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, -2.5)
+pixel_size = 0.004
+billboard = 1
+modulate = Color(1, 0.9, 0.2, 1)
+text = "Objetivo: Llegar hasta el otro lado sin ser atropellado"
+font_size = 42
+outline_size = 6
+
+[node name="EscenarioPrincipal" parent="." instance=ExtResource("2_scenario")]
+script = ExtResource("3_collisions")
+
+[node name="InvisibleBoundaries" type="Node3D" parent="."]
+
+[node name="BoundaryNorth" type="StaticBody3D" parent="InvisibleBoundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -65)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleBoundaries/BoundaryNorth"]
+transform = Transform3D(0.004939254, 0, 0.9999878, 0, 1, 0, -0.9999878, 0, 0.004939254, 0, 0, 168.91385)
+shape = SubResource("BoxShape3D_Boundary")
+
+[node name="BoundarySouth" type="StaticBody3D" parent="InvisibleBoundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 110)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleBoundaries/BoundarySouth"]
+transform = Transform3D(0.0021991276, 0, -0.99999756, 0, 1, 0, 0.99999756, 0, 0.0021991276, -3.8927727, 0, -114.55542)
+shape = SubResource("BoxShape3D_Boundary")
+
+[node name="BoundaryEast" type="StaticBody3D" parent="InvisibleBoundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 65, 5, 22.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleBoundaries/BoundaryEast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.52839, 0, 30.698753)
+shape = SubResource("BoxShape3D_Boundary")
+
+[node name="BoundaryWest" type="StaticBody3D" parent="InvisibleBoundaries"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -65, 5, 22.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleBoundaries/BoundaryWest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 109.00696, 0, 0)
+shape = SubResource("BoxShape3D_Boundary")
+
+[node name="FinishZone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 104.55173)
+script = ExtResource("4_finish")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FinishZone"]
+transform = Transform3D(21.78, 0, 0, 0, 2.354, 0, 0, 0, 3.077, 0, 4.5245695, -5.0279922)
+shape = SubResource("BoxShape3D_FinishZone")
+
+[node name="EndGameMenu" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -10)
+script = ExtResource("5_endmenu")
+
+[node name="UI" type="Node3D" parent="EndGameMenu"]
+
+[node name="TitleLabel" type="Label3D" parent="EndGameMenu/UI"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+pixel_size = 0.01
+modulate = Color(1, 0.8, 0, 1)
+text = "¡JUEGO COMPLETADO!"
+font_size = 80
+outline_size = 8
+
+[node name="MessageLabel" type="Label3D" parent="EndGameMenu/UI"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+pixel_size = 0.006
+text = "Elige una opcion"
+font_size = 48
+outline_size = 4
+
+[node name="RestartButton" type="StaticBody3D" parent="EndGameMenu/UI"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EndGameMenu/UI/RestartButton"]
+shape = SubResource("BoxShape3D_ButtonRestart")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EndGameMenu/UI/RestartButton"]
+mesh = SubResource("BoxMesh_ButtonRestart")
+surface_material_override/0 = SubResource("Material_ButtonRestart")
+
+[node name="Label3D" type="Label3D" parent="EndGameMenu/UI/RestartButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.056)
+text = "REINICIAR"
+font_size = 48
+outline_size = 8
+
+[node name="MenuButton" type="StaticBody3D" parent="EndGameMenu/UI"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EndGameMenu/UI/MenuButton"]
+shape = SubResource("BoxShape3D_ButtonRestart")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="EndGameMenu/UI/MenuButton"]
+mesh = SubResource("BoxMesh_ButtonRestart")
+surface_material_override/0 = SubResource("Material_ButtonMenu")
+
+[node name="Label3D" type="Label3D" parent="EndGameMenu/UI/MenuButton"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.056)
+text = "MENU PRINCIPAL"
+font_size = 48
+outline_size = 8
+
+[node name="TrafficSystem" type="Node" parent="."]
+
+[node name="CrossingManager" type="Node" parent="TrafficSystem"]
+script = ExtResource("6_crossing_manager")
+crossing_zone_path = NodePath("../CrossingZone")
+safety_messages_path = NodePath("../SafetyMessages")
+player_path = NodePath("../../Player")
+
+[node name="SafetyMessages" type="Node3D" parent="TrafficSystem"]
+script = ExtResource("7_safety_messages")
+
+[node name="MessageLabel" type="Label3D" parent="TrafficSystem/SafetyMessages"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.5)
+pixel_size = 0.006
+billboard = 1
+text = "ALTO"
+font_size = 60
+outline_size = 8
+
+[node name="CrossingZone" type="Area3D" parent="TrafficSystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.766408, 1, 37.62303)
+script = ExtResource("8_crossing_zone")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem/CrossingZone"]
+transform = Transform3D(5.275, 0, 0, 0, 0.98, 0, 0, 0, 1.695, 5.99104, 0, 0)
+shape = SubResource("BoxShape3D_CrossingZone")
+
+[node name="Vehicle" type="CharacterBody3D" parent="TrafficSystem" groups=["vehicle"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -40.591587, 1.5, 37.62)
+script = ExtResource("9_vehicle")
+end_position = Vector3(35, 1.5, 37.62)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem/Vehicle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_Vehicle")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TrafficSystem/Vehicle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_Vehicle")
+surface_material_override/0 = SubResource("Material_Vehicle")
+
+[node name="Area3D" type="Area3D" parent="TrafficSystem/Vehicle"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem/Vehicle/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_VehicleArea")
+
+[node name="Vehicle2" type="CharacterBody3D" parent="TrafficSystem" groups=["vehicle"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -47.02778, 1.5, 36.428627)
+script = ExtResource("9_vehicle")
+end_position = Vector3(35, 1.5, 40)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem/Vehicle2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_Vehicle")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TrafficSystem/Vehicle2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_Vehicle")
+surface_material_override/0 = SubResource("Material_Vehicle2")
+
+[node name="Area3D" type="Area3D" parent="TrafficSystem/Vehicle2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem/Vehicle2/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_VehicleArea")
+
+[node name="TrafficSystem2" type="Node" parent="."]
+
+[node name="CrossingManager" type="Node" parent="TrafficSystem2"]
+script = ExtResource("6_crossing_manager")
+crossing_zone_path = NodePath("../CrossingZone")
+safety_messages_path = NodePath("../../TrafficSystem/SafetyMessages")
+player_path = NodePath("../../Player")
+
+[node name="CrossingZone" type="Area3D" parent="TrafficSystem2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.77, 1, 60)
+script = ExtResource("8_crossing_zone")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem2/CrossingZone"]
+transform = Transform3D(5.275, 0, 0, 0, 0.98, 0, 0, 0, 1.695, 0, 0, 0)
+shape = SubResource("BoxShape3D_CrossingZone")
+
+[node name="Vehicle3" type="CharacterBody3D" parent="TrafficSystem2" groups=["vehicle"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -41.529476, 1.5, 59)
+script = ExtResource("9_vehicle")
+speed = 5.5
+end_position = Vector3(35, 1.5, 59)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem2/Vehicle3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_Vehicle")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TrafficSystem2/Vehicle3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_Vehicle")
+surface_material_override/0 = SubResource("Material_Vehicle3")
+
+[node name="Area3D" type="Area3D" parent="TrafficSystem2/Vehicle3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem2/Vehicle3/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_VehicleArea")
+
+[node name="Vehicle4" type="CharacterBody3D" parent="TrafficSystem2" groups=["vehicle"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -44.3449, 1.5, 62)
+script = ExtResource("9_vehicle")
+speed = 5.5
+end_position = Vector3(35, 1.5, 62)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem2/Vehicle4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_Vehicle")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TrafficSystem2/Vehicle4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_Vehicle")
+surface_material_override/0 = SubResource("Material_Vehicle4")
+
+[node name="Area3D" type="Area3D" parent="TrafficSystem2/Vehicle4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem2/Vehicle4/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_VehicleArea")
+
+[node name="TrafficSystem3" type="Node" parent="."]
+
+[node name="CrossingManager" type="Node" parent="TrafficSystem3"]
+script = ExtResource("6_crossing_manager")
+crossing_zone_path = NodePath("../CrossingZone")
+safety_messages_path = NodePath("../../TrafficSystem/SafetyMessages")
+player_path = NodePath("../../Player")
+
+[node name="CrossingZone" type="Area3D" parent="TrafficSystem3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.77, 1, 80)
+script = ExtResource("8_crossing_zone")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem3/CrossingZone"]
+transform = Transform3D(5.275, 0, 0, 0, 0.98, 0, 0, 0, 1.695, 2.3567505, 0, 0)
+shape = SubResource("BoxShape3D_CrossingZone")
+
+[node name="Vehicle5" type="CharacterBody3D" parent="TrafficSystem3" groups=["vehicle"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -40.35232, 1.5, 85.65148)
+script = ExtResource("9_vehicle")
+speed = 6.0
+end_position = Vector3(35, 1.5, 79)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem3/Vehicle5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_Vehicle")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TrafficSystem3/Vehicle5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_Vehicle")
+surface_material_override/0 = SubResource("Material_Vehicle5")
+
+[node name="Area3D" type="Area3D" parent="TrafficSystem3/Vehicle5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem3/Vehicle5/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_VehicleArea")
+
+[node name="Vehicle6" type="CharacterBody3D" parent="TrafficSystem3" groups=["vehicle"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -46.909298, 1.5, 84.068504)
+script = ExtResource("9_vehicle")
+speed = 6.0
+end_position = Vector3(35, 1.5, 82)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem3/Vehicle6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_Vehicle")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TrafficSystem3/Vehicle6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_Vehicle")
+surface_material_override/0 = SubResource("Material_Vehicle6")
+
+[node name="Area3D" type="Area3D" parent="TrafficSystem3/Vehicle6"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrafficSystem3/Vehicle6/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_VehicleArea")
