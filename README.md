@@ -29,7 +29,7 @@ Juego educativo de realidad virtual que simula múltiples cruces de calle con tr
 
 - 📢 **Mensajes educativos**: Indicadores visuales de seguridad codificados por color
 
-- 🔄 **Sistema de reinicio completo**: Resetea todas las zonas al reiniciar o después de un atropello## 📋 Descripción**Autor:** Diego Armando Sanchez RubioJuego de realidad virtual desarrollado en **Godot 4.5** para dispositivos Android con **Google Cardboard**. El jugador debe recorrer un escenario 3D hasta llegar a la meta.Este es un proyecto base para crear juegos VR para Android compatible con Google Cardboard.
+- 🔄 **Sistema de reinicio completo**: Resetea todas las zonas al reiniciar o después de un atropello
 
 - 🎮 **Control VR**: Movimiento continuo con Google Cardboard
 
@@ -105,7 +105,7 @@ El sistema muestra mensajes codificados por color según la situación:- Se muev
 
 
 
-### Sistema de Reinicio- Modo editor con controles de mouse para pruebas- **Aprende educación vial**: Debe cruzar calles respetando el tráfico vehicular  - `main.tscn`: Escena principal con configuración VR
+### Sistema de Reinicio
 
 
 
@@ -840,8 +840,6 @@ Este proyecto puede usarse como herramienta educativa para enseñar:
 
 5. El vehículo se agregará automáticamente al sistema (grupo "vehicle")
 
-└── README.md                  # Este archivo- Mantén un framerate alto (60+ FPS) para evitar mareos
-
 #### Cambiar Posición de la Zona de Cruce
 
 1. Seleccionar `TrafficSystem/CrossingZone` en el editor---
@@ -1338,6 +1336,7 @@ Este proyecto es de código abierto y puede ser usado con fines educativos.
 **Fecha:** 2025  
 **Motor:** Godot 4.5  
 **Propósito:** Educación vial en realidad virtual
+
 
 
 
